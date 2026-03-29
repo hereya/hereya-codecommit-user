@@ -1,0 +1,6 @@
+name: hereya/codecommit-user
+version: 0.1.0
+description: "Create a workspace-bound IAM user with CodeCommit HTTPS Git credentials"
+iac: cdk
+infra: aws
+visibility: public

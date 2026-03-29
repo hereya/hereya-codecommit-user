@@ -8,11 +8,9 @@ export class HereyaCodecommitUserStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const workspace = process.env['workspace'] as string;
-
     // ── IAM User for CodeCommit Git HTTPS credentials ──
     const gitUser = new iam.User(this, 'CodecommitUser', {
-      userName: `${workspace}-codecommit-user`,
+      userName: `${this.stackName}-codecommit-user`,
     });
 
     // Create HTTPS Git credentials via AwsCustomResource (no native CFN resource exists)
@@ -57,8 +55,8 @@ export class HereyaCodecommitUserStack extends cdk.Stack {
 
     // Store the Git password in Secrets Manager
     const gitPasswordSecret = new secretsmanager.Secret(this, 'GitPasswordSecret', {
-      secretName: `${workspace}/codecommit-git-password`,
-      description: `CodeCommit Git password for workspace ${workspace}`,
+      secretName: `${this.stackName}/codecommit-git-password`,
+      description: `CodeCommit Git password for ${this.stackName}`,
       secretStringValue: cdk.SecretValue.unsafePlainText(gitPassword),
     });
 
